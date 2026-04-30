@@ -5,7 +5,7 @@ on:
     branches: [master]
     paths:
       - "packages/container/**"
-      - ".github/workflows/contanier.yml"
+      - ".github/workflows/container.yml"
 
 defaults:
   run:
