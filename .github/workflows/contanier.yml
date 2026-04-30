@@ -25,13 +25,14 @@ jobs:
       - name: Build the container application
         run: npm run build
 
-      - name: Deploty to aws
+      - name: Deploy to aws
         run: echo "Deploying to AWS..."
 
-      - uses: chrislennon/action-aws-cli@v1.1
+      - name: Configure AWS CLI
+        uses: chrislennon/action-aws-cli@v1.1
 
-    - name: Upload to S3
-      run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }}/container/latest
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload to S3
+        run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }}/container/latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
