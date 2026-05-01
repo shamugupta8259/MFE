@@ -34,3 +34,12 @@ jobs:
 
       - name: Upload to S3
         run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }}/container/latest
+
+      - name: Invalidate CloudFront cache
+      run: aws cloudfront create-invalidation \
+        --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} \
+        --paths "/container/latest/index.html"
+      env:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-north-1 
