@@ -41,7 +41,5 @@ jobs:
           unzip awscliv2.zip
           sudo ./aws/install
 
-
       - name: Upload to S3
         run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }}/container/latest
- 
