@@ -3,9 +3,6 @@ name: deploy-container
 on:
   push:
     branches: [master]
-    # paths:
-    #   - "packages/container/**"
-    #   - ".github/workflows/container.yml"
 
 defaults:
   run:
@@ -25,9 +22,6 @@ jobs:
       - name: Build the container application
         run: npm run build
 
-      - name: Deploy to aws
-        run: echo "Deploying to AWS..."
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -35,11 +29,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: Install AWS CLI
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
 
       - name: Upload to S3
         run: aws s3 sync ./dist s3://${{ secrets.AWS_BUCKET_NAME }}/container/latest
