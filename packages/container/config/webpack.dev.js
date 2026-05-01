@@ -1,7 +1,7 @@
 const { merge } = require("webpack-merge");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const commonConfig = require("./webpack.common");
-const packageJson = require("../package.json ");
+const packageJson = require("../package.json");
 
 module.exports = merge(commonConfig, {
   mode: "development",
@@ -12,7 +12,6 @@ module.exports = merge(commonConfig, {
     },
   },
   plugins: [
-   
     new ModuleFederationPlugin({
       name: "container",
       remotes: {
