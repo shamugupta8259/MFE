@@ -22,5 +22,6 @@ module.exports = merge(commonConfig, {
   ],
   output: {
     filename: "[name].[contenthash].js",
+    publicPath: "/container/latest/",
   },
 });
