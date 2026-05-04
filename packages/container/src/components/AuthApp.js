@@ -1,28 +1,28 @@
-import { mount } from "marketing/MarketingApp";
+import { mount } from "auth/AuthApp";
 import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function MarketingApp() {
+export default function AuthApp({ onSignIn }) {
   const ref = useRef(null);
   const history = useHistory();
   useEffect(() => {
     if (ref.current) {
       const { onParentNavigate } = mount(ref.current, {
+        initialPath: history.location.pathname,
         onNavigate: ({ pathname: nextPathname }) => {
           const { pathname } = history.location;
           if (pathname !== nextPathname) {
             history.push(nextPathname);
           }
         },
-        initialPath: history.location.pathname,
-        onSignIn: () => console.log("user signed in"),
+        onSignIn: () => onSignIn(),
         onSignOut: () => console.log("user signed out"),
       });
       history.listen(onParentNavigate);
     }
   }, []);
 
-  return <div ref={ref}>kkhjghfg</div>;
+  return <div ref={ref}>as</div>;
 }
